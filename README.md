@@ -32,6 +32,7 @@ qc.config = {
         }]
     }
 }
+```
 
 Use `get_url()` on your quickchart object to get the encoded URL that renders your chart:
 
