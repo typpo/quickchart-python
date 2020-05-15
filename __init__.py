@@ -1,0 +1,1 @@
+from quickchart import *
