@@ -1,13 +1,14 @@
 # quickchart-python
+[![Build Status](https://travis-ci.com/typpo/quickchart-python.svg?branch=master)](https://travis-ci.com/typpo/quickchart-python)
 
 A Python client for the [quickchart.io](https://quickchart.io/) image charts web service.
 
 # Installation
 
-Use the `quickchart.py` library in this project, or install through pip:
+Use the `quickchart.py` library in this project, or install through [pip](https://pypi.org/project/quickchart.io/):
 
 ```
-pip install quickchart
+pip install quickchart.io
 ```
 
 # Usage
