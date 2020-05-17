@@ -1,8 +1,12 @@
 language: python
 python:
   - 3.7
-install:
+cache:
+  pip: true
+before_install:
   - pip install poetry
+install:
+  - poetry install
 script:
-  - poetry install && poetry run python tests.py
+  - poetry run python tests.py
 
