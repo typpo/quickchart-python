@@ -25,7 +25,7 @@ class QuickChart:
         if not self.is_valid():
             raise RuntimeError('You must set the `config` attribute before generating a url')
         params = {
-            'c': json.dumps(self.config),
+            'c': json.dumps(self.config) if type(self.config) == dict else self.config,
             'w': self.width,
             'h': self.height,
             'bkg': self.background_color,
@@ -43,7 +43,7 @@ class QuickChart:
             raise RuntimeError('Could not find `requests` dependency')
 
         postdata = {
-            'chart': json.dumps(self.config),
+            'chart': json.dumps(self.config) if type(self.config) == dict else self.config,
             'width': self.width,
             'height': self.height,
             'backgroundColor': self.background_color,
