@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quickchart.io"
-version = "0.1.0"
+version = "0.1.1"
 description = "A client for quickchart.io, a service that generates static chart images"
 authors = ["Ian Webster <ianw_pypi@ianww.com>"]
 license = "MIT"
