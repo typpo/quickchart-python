@@ -56,7 +56,7 @@ The URLs will render an image of a chart:
 
 You can set the following properties:
 
-### config: dict
+### config: dict or str
 The actual Chart.js chart configuration.
 
 ### width: int
@@ -78,13 +78,13 @@ The device pixel ratio of the chart. This will multiply the number of pixels by 
 
 There are two ways to get a URL for your chart object.
 
-### getUrl(): string
+### get_url(): str
 
 Returns a URL that will display the chart image when loaded.
 
-### getShortUrl(): Promise
+### get_short_url(): str
 
-Uses the quickchart.io web service to create a fixed-length chart URL that displays the chart image.  The Promise resolves with a URL such as `https://quickchart.io/chart/render/f-a1d3e804-dfea-442c-88b0-9801b9808401`.
+Uses the quickchart.io web service to create a fixed-length chart URL that displays the chart image.  Returns a URL such as `https://quickchart.io/chart/render/f-a1d3e804-dfea-442c-88b0-9801b9808401`.
 
 Note that short URLs expire after a few days for users of the free service.  You can [subscribe](https://quickchart.io/pricing/) to keep them around longer.
 
