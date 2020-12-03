@@ -88,6 +88,16 @@ Uses the quickchart.io web service to create a fixed-length chart URL that displ
 
 Note that short URLs expire after a few days for users of the free service.  You can [subscribe](https://quickchart.io/pricing/) to keep them around longer.
 
+## Other functionality
+
+### get_bytes()
+
+Returns the bytes representing the chart image.
+
+### to_file(path: str)
+
+Writes the chart image to a file path.
+
 ## More examples
 
 Checkout the `examples` directory to see other usage.

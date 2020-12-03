@@ -36,7 +36,7 @@ class QuickChart:
             params['key'] = self.key
         return 'https://quickchart.io/chart?%s' % urlencode(params)
 
-    def get_short_url(self):
+    def _post(self, path):
         try:
             import requests
         except:
@@ -52,10 +52,24 @@ class QuickChart:
         }
         if self.key:
             postdata['key'] = self.key
-        resp = requests.post('https://quickchart.io/chart/create', json=postdata)
+        resp = requests.post('https://quickchart.io/chart', json=postdata)
         if resp.status_code != 200:
             raise RuntimeError('Invalid response code from chart creation endpoint')
+        return resp
+
+    def get_short_url(self):
+        resp = self._post('https://quickchart.io/chart/create')
         parsed = json.loads(resp.text)
         if not parsed['success']:
             raise RuntimeError('Failure response status from chart creation endpoint')
         return parsed['url']
+
+    def get_bytes(self):
+        resp = self._post('https://quickchart.io/chart')
+        return response.content
+
+    def to_file(self, path):
+        content = self.get_bytes()
+        with open(path, 'wb') as f:
+            f.write(response.content)
+
