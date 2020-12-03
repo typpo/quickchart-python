@@ -71,5 +71,5 @@ class QuickChart:
     def to_file(self, path):
         content = self.get_bytes()
         with open(path, 'wb') as f:
-            f.write(response.content)
+            f.write(content)
 
