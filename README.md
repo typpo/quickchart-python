@@ -1,5 +1,7 @@
 # quickchart-python
 [![Build Status](https://travis-ci.com/typpo/quickchart-python.svg?branch=master)](https://travis-ci.com/typpo/quickchart-python)
+![PyPI](https://img.shields.io/pypi/v/quickchart.io)
+![PyPI - License](https://img.shields.io/pypi/l/quickchart.io)
 
 A Python client for the [quickchart.io](https://quickchart.io/) image charts web service.
 
