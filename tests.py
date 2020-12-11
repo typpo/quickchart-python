@@ -33,5 +33,21 @@ class TestQuickChart(unittest.TestCase):
 
         self.assertRaises(RuntimeError, qc.get_url)
 
+    def test_get_bytes(self):
+        qc = QuickChart()
+        qc.width = 600
+        qc.height = 300
+        qc.config = {
+            "type": "bar",
+            "data": {
+                "labels": ["Hello world", "Test"],
+                "datasets": [{
+                    "label": "Foo",
+                    "data": [1, 2]
+                }]
+            }
+        }
+        self.assertTrue(len(qc.get_bytes()) > 8000)
+
 if __name__ == '__main__':
     unittest.main()

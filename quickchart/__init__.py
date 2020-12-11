@@ -66,7 +66,7 @@ class QuickChart:
 
     def get_bytes(self):
         resp = self._post('https://quickchart.io/chart')
-        return response.content
+        return resp.content
 
     def to_file(self, path):
         content = self.get_bytes()
