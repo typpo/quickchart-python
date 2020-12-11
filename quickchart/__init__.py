@@ -36,7 +36,7 @@ class QuickChart:
             params['key'] = self.key
         return 'https://quickchart.io/chart?%s' % urlencode(params)
 
-    def _post(self, path):
+    def _post(self, url):
         try:
             import requests
         except:
@@ -52,7 +52,7 @@ class QuickChart:
         }
         if self.key:
             postdata['key'] = self.key
-        resp = requests.post('https://quickchart.io/chart', json=postdata)
+        resp = requests.post(url, json=postdata)
         if resp.status_code != 200:
             raise RuntimeError('Invalid response code from chart creation endpoint')
         return resp
