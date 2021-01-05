@@ -23,7 +23,6 @@ from quickchart import QuickChart
 qc = QuickChart()
 qc.width = 500
 qc.height = 300
-qc.device_pixel_ratio = 2.0
 qc.config = {
     "type": "bar",
     "data": {
