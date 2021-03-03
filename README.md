@@ -53,7 +53,48 @@ The URLs will render an image of a chart:
 
 <img src="https://quickchart.io/chart?c=%7B%22type%22%3A+%22bar%22%2C+%22data%22%3A+%7B%22labels%22%3A+%5B%22Hello+world%22%2C+%22Test%22%5D%2C+%22datasets%22%3A+%5B%7B%22label%22%3A+%22Foo%22%2C+%22data%22%3A+%5B1%2C+2%5D%7D%5D%7D%7D&w=600&h=300&bkg=%23ffffff&devicePixelRatio=2.0&f=png" width="500" />
 
-## Customizing your chart
+# Using Javascript functions in your chart
+
+Chart.js sometimes relies on Javascript functions (e.g. for formatting tick labels).  There are a couple approaches:
+
+  - Build chart configuration as a string instead of a Python object.  See `examples/simple_example_with_function.py`.
+  - Build chart configuration as a Python object and include a placeholder string for the Javascript function.  Then, find and replace it.
+  - Use the provided `QuickChartFunction` class.  See `examples/using_quickchartfunction.py` for a full example.
+
+A short example using `QuickChartFunction`:
+```py
+qc = QuickChart()
+qc.config = {
+    "type": "bar",
+    "data": {
+        "labels": ["A", "B"],
+        "datasets": [{
+            "label": "Foo",
+            "data": [1, 2]
+        }]
+    },
+    "options": {
+        "scales": {
+            "yAxes": [{
+                "ticks": {
+                    "callback": QuickChartFunction('(val) => val + "k"')
+                }
+            }],
+            "xAxes": [{
+                "ticks": {
+                    "callback": QuickChartFunction('''function(val) {
+                      return val + '???';
+                    }''')
+                }
+            }]
+        }
+    }
+}
+
+print(qc.get_url())
+```
+
+# Customizing your chart
 
 You can set the following properties:
 
@@ -74,6 +115,12 @@ The background color of the chart. Any valid HTML color works. Defaults to #ffff
 
 ### device_pixel_ratio: float
 The device pixel ratio of the chart. This will multiply the number of pixels by the value. This is usually used for retina displays. Defaults to 1.0.
+
+### host
+Override the host of the chart render server. Defaults to quickchart.io.
+
+### key
+Set an API key that will be included with the request.
 
 ## Getting URLs
 
