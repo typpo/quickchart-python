@@ -17,6 +17,9 @@ class QuickChartFunction:
     def __init__(self, script):
         self.script = script
 
+    def __repr__(self):
+        return self.script
+
 
 def serialize(obj):
     if isinstance(obj, QuickChartFunction):
