@@ -1,12 +1,32 @@
 """A python client for quickchart.io, a web service that generates static
 charts."""
 
+import datetime
 import json
+import re
 try:
     from urllib import urlencode
 except:
     # For Python 3
     from urllib.parse import urlencode
+
+FUNCTION_DELIMITER_RE = re.compile('\"__BEGINFUNCTION__(.*?)__ENDFUNCTION__\"')
+
+class QuickChartFunction:
+    def __init__(self, script):
+        self.script = script
+
+def serialize(obj):
+    if isinstance(obj, QuickChartFunction):
+        return '__BEGINFUNCTION__' + obj.script + '__ENDFUNCTION__'
+    if isinstance(obj, (datetime.date, datetime.datetime)):
+        return obj.isoformat()
+    return obj.__dict__
+
+def dump_json(obj):
+    ret = json.dumps(obj, default=serialize, separators=(',', ':'))
+    ret = FUNCTION_DELIMITER_RE.sub(lambda match: json.loads('"' + match.group(1) + '"'), ret)
+    return ret
 
 class QuickChart:
     def __init__(self):
@@ -25,7 +45,7 @@ class QuickChart:
         if not self.is_valid():
             raise RuntimeError('You must set the `config` attribute before generating a url')
         params = {
-            'c': json.dumps(self.config) if type(self.config) == dict else self.config,
+            'c': dump_json(self.config) if type(self.config) == dict else self.config,
             'w': self.width,
             'h': self.height,
             'bkg': self.background_color,
@@ -43,7 +63,7 @@ class QuickChart:
             raise RuntimeError('Could not find `requests` dependency')
 
         postdata = {
-            'chart': json.dumps(self.config) if type(self.config) == dict else self.config,
+            'chart': dump_json(self.config) if type(self.config) == dict else self.config,
             'width': self.width,
             'height': self.height,
             'backgroundColor': self.background_color,
