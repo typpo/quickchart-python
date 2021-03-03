@@ -42,9 +42,14 @@ class QuickChart:
         self.device_pixel_ratio = 1.0
         self.format = 'png'
         self.key = None
+        self.scheme = 'https'
+        self.host = 'quickchart.io'
 
     def is_valid(self):
         return self.config is not None
+
+    def get_url_base(self):
+        return '%s://%s' % (self.scheme, self.host)
 
     def get_url(self):
         if not self.is_valid():
@@ -60,7 +65,7 @@ class QuickChart:
         }
         if self.key:
             params['key'] = self.key
-        return 'https://quickchart.io/chart?%s' % urlencode(params)
+        return '%s/chart?%s' % (self.get_url_base(), urlencode(params))
 
     def _post(self, url):
         try:
@@ -85,7 +90,7 @@ class QuickChart:
         return resp
 
     def get_short_url(self):
-        resp = self._post('https://quickchart.io/chart/create')
+        resp = self._post('%s/chart/create' % self.get_url_base())
         parsed = json.loads(resp.text)
         if not parsed['success']:
             raise RuntimeError(
@@ -93,7 +98,7 @@ class QuickChart:
         return parsed['url']
 
     def get_bytes(self):
-        resp = self._post('https://quickchart.io/chart')
+        resp = self._post('%s/chart' % self.get_url_base())
         return resp.content
 
     def to_file(self, path):
