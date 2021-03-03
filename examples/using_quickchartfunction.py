@@ -21,6 +21,12 @@ qc.config = {
                 "ticks": {
                     "callback": QuickChartFunction('(val) => val + "k"')
                 }
+            }, {
+                "ticks": {
+                    "callback": QuickChartFunction('''function(val) {
+                      return val + '???';
+                    }''')
+                }
             }],
             "xAxes": [{
                 "ticks": {
