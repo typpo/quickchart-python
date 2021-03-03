@@ -12,9 +12,11 @@ except:
 
 FUNCTION_DELIMITER_RE = re.compile('\"__BEGINFUNCTION__(.*?)__ENDFUNCTION__\"')
 
+
 class QuickChartFunction:
     def __init__(self, script):
         self.script = script
+
 
 def serialize(obj):
     if isinstance(obj, QuickChartFunction):
@@ -23,10 +25,13 @@ def serialize(obj):
         return obj.isoformat()
     return obj.__dict__
 
+
 def dump_json(obj):
     ret = json.dumps(obj, default=serialize, separators=(',', ':'))
-    ret = FUNCTION_DELIMITER_RE.sub(lambda match: json.loads('"' + match.group(1) + '"'), ret)
+    ret = FUNCTION_DELIMITER_RE.sub(
+        lambda match: json.loads('"' + match.group(1) + '"'), ret)
     return ret
+
 
 class QuickChart:
     def __init__(self):
@@ -43,7 +48,8 @@ class QuickChart:
 
     def get_url(self):
         if not self.is_valid():
-            raise RuntimeError('You must set the `config` attribute before generating a url')
+            raise RuntimeError(
+                'You must set the `config` attribute before generating a url')
         params = {
             'c': dump_json(self.config) if type(self.config) == dict else self.config,
             'w': self.width,
@@ -74,14 +80,16 @@ class QuickChart:
             postdata['key'] = self.key
         resp = requests.post(url, json=postdata)
         if resp.status_code != 200:
-            raise RuntimeError('Invalid response code from chart creation endpoint')
+            raise RuntimeError(
+                'Invalid response code from chart creation endpoint')
         return resp
 
     def get_short_url(self):
         resp = self._post('https://quickchart.io/chart/create')
         parsed = json.loads(resp.text)
         if not parsed['success']:
-            raise RuntimeError('Failure response status from chart creation endpoint')
+            raise RuntimeError(
+                'Failure response status from chart creation endpoint')
         return parsed['url']
 
     def get_bytes(self):
@@ -92,4 +100,3 @@ class QuickChart:
         content = self.get_bytes()
         with open(path, 'wb') as f:
             f.write(content)
-
