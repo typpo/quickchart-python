@@ -37,7 +37,7 @@ async def graph(ctx):
         output_buffer = BytesIO()  # By using BytesIO we don't have to save the file in our system.
         chat_sample.save(output_buffer, "png")
         output_buffer.seek(0)
-    await ctx.send(file=discord.File(fp=output_buffer, filename="chat_sample.png"))  # Change the file name accordingly.
+    await ctx.send(file=discord.File(fp=output_buffer, filename="chart_sample.png"))  # Change the file name accordingly.
 
 
 @graph.before_invoke
