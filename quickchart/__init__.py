@@ -44,6 +44,7 @@ class QuickChart:
         self.background_color = '#ffffff'
         self.device_pixel_ratio = 1.0
         self.format = 'png'
+        self.version = '2.9.4'
         self.key = None
         self.scheme = 'https'
         self.host = 'quickchart.io'
@@ -65,6 +66,7 @@ class QuickChart:
             'bkg': self.background_color,
             'devicePixelRatio': self.device_pixel_ratio,
             'f': self.format,
+            'v': self.version,
         }
         if self.key:
             params['key'] = self.key
@@ -83,6 +85,7 @@ class QuickChart:
             'backgroundColor': self.background_color,
             'devicePixelRatio': self.device_pixel_ratio,
             'format': self.format,
+            'version': self.version,
         }
         if self.key:
             postdata['key'] = self.key

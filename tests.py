@@ -26,6 +26,23 @@ class TestQuickChart(unittest.TestCase):
         self.assertIn('devicePixelRatio=2', url)
         self.assertIn('Hello+world', url)
 
+    def test_version(self):
+        qc = QuickChart()
+        qc.version = '3.4.0'
+        qc.config = {
+            "type": "bar",
+            "data": {
+                "labels": ["Hello world", "Test"],
+                "datasets": [{
+                    "label": "Foo",
+                    "data": [1, 2]
+                }]
+            }
+        }
+
+        url = qc.get_url()
+        self.assertIn('v=3.4.0', url)
+
     def test_no_chart(self):
         qc = QuickChart()
         qc.width = 600
