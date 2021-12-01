@@ -7,7 +7,7 @@ A Python client for the [quickchart.io](https://quickchart.io/) image charts web
 
 # Installation
 
-Use the `quickchart.py` library in this project, or install through [pip](https://pypi.org/project/quickchart.io/):
+Use the `quickchart` library in this project, or install through [pip](https://pypi.org/project/quickchart.io/):
 
 ```
 pip install quickchart.io
