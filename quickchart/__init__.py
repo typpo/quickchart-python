@@ -96,16 +96,20 @@ class QuickChart:
         }
         resp = requests.post(url, json=postdata, headers=headers)
         if resp.status_code != 200:
+            err_description = resp.headers.get('x-quickchart-error')
             raise RuntimeError(
-                'Invalid response code from chart creation endpoint')
+                'Invalid response code from chart creation endpoint: %d%s'
+                % (resp.status_code, '\n%s' % err_description if err_description else '')
+            )
         return resp
+
 
     def get_short_url(self):
         resp = self._post('%s/chart/create' % self.get_url_base())
         parsed = json.loads(resp.text)
         if not parsed['success']:
             raise RuntimeError(
-                'Failure response status from chart creation endpoint')
+                'Chart creation endpoint failed to create chart')
         return parsed['url']
 
     def get_bytes(self):
