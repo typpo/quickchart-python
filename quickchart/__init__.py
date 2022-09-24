@@ -10,6 +10,8 @@ except:
     # For Python 3
     from urllib.parse import urlencode
 
+USER_AGENT = 'quickchart-python (1.0.0)'
+
 FUNCTION_DELIMITER_RE = re.compile('\"__BEGINFUNCTION__(.*?)__ENDFUNCTION__\"')
 
 
@@ -89,7 +91,10 @@ class QuickChart:
         }
         if self.key:
             postdata['key'] = self.key
-        resp = requests.post(url, json=postdata)
+        headers = {
+            'user-agent': USER_AGENT,
+        }
+        resp = requests.post(url, json=postdata, headers=headers)
         if resp.status_code != 200:
             raise RuntimeError(
                 'Invalid response code from chart creation endpoint')
