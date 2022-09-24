@@ -1,14 +1,15 @@
+import random
+
 from quickchart import QuickChart
 
 qc = QuickChart()
 qc.config = {
-    "type": "bar",
+    "type": "line",
     "data": {
-        "labels": ["Hello world", "Test"],
+        "labels": list(range(0, 100)),
         "datasets": [{
             "label": "Foo",
-            # Count from 0 to 100
-            "data": list(range(0, 100)),
+            "data": random.sample(range(0, 100), 100),
         }]
     }
 }
