@@ -10,7 +10,7 @@ except:
     # For Python 3
     from urllib.parse import urlencode
 
-USER_AGENT = 'quickchart-python (1.0.0)'
+USER_AGENT = 'quickchart-python (2.0.0)'
 
 FUNCTION_DELIMITER_RE = re.compile('\"__BEGINFUNCTION__(.*?)__ENDFUNCTION__\"')
 
