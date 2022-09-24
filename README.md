@@ -1,7 +1,7 @@
 # quickchart-python
 [![Build Status](https://travis-ci.com/typpo/quickchart-python.svg?branch=master)](https://travis-ci.com/typpo/quickchart-python)
-![PyPI](https://img.shields.io/pypi/v/quickchart.io)
-![PyPI - License](https://img.shields.io/pypi/l/quickchart.io)
+[![PyPI](https://img.shields.io/pypi/v/quickchart.io)](https://pypi.org/project/quickchart-io/)
+[![PyPI - License](https://img.shields.io/pypi/l/quickchart.io)](https://pypi.org/project/quickchart-io/)
 
 A Python client for the [quickchart.io](https://quickchart.io/) image charts web service.
 
@@ -12,6 +12,8 @@ Use the `quickchart` library in this project, or install through [pip](https://p
 ```
 pip install quickchart.io
 ```
+
+As of release 2.0, this package requires >= Python 3.7.  If you need support for earlier versions of Python, use [version 1.0.1](https://pypi.org/project/quickchart-io/1.0.1/).
 
 # Usage
 
