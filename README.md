@@ -101,7 +101,9 @@ print(qc.get_url())
 You can set the following properties:
 
 ### config: dict or str
-The actual Chart.js chart configuration.
+The actual Chart.js chart configuration.  
+
+If your chart configuration is JSON-compatible, it's usually easiest to pass an object ([example](https://github.com/typpo/quickchart-python/blob/master/examples/simple_example.py)).  If your chart configuration contains a Javascript function, you may pass it as a string ([example](https://github.com/typpo/quickchart-python/blob/master/examples/simple_example_with_function.py)) or use `QuickChartFunction` ([example](https://github.com/typpo/quickchart-python/blob/master/examples/using_quickchartfunction.py)).
 
 ### width: int
 Width of the chart image in pixels.  Defaults to 500
