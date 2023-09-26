@@ -123,10 +123,13 @@ The device pixel ratio of the chart. This will multiply the number of pixels by 
 ### version: str
 The version of Chart.js to use. Acceptable values are documented [here](https://quickchart.io/documentation/#parameters). Usually used to select Chart.js 3+.
 
-### host
+### scheme: str
+The protocol to use. Defaults to `https`.
+
+### host: str
 Override the host of the chart render server. Defaults to quickchart.io.
 
-### key
+### key: str
 Set an API key that will be included with the request.
 
 ## Getting URLs
