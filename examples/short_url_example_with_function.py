@@ -1,7 +1,7 @@
 from quickchart import QuickChart
 
 qc = QuickChart()
-qc.config = '''{
+qc.config = """{
   type: 'bar',
   data: {
     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -24,7 +24,7 @@ qc.config = '''{
       }]
     }
   }
-}'''
+}"""
 
 print(qc.get_short_url())
 #

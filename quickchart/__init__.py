@@ -1,122 +1,130 @@
-"""A python client for quickchart.io, a web service that generates static
+"""A Python client for quickchart.io, a web service that generates static
 charts."""
+
+from __future__ import annotations
 
 import datetime
 import json
 import re
+from importlib import metadata
+from typing import Any, Optional, Union
+from urllib.parse import urlencode
+
+import requests
+
 try:
-    from urllib import urlencode
-except:
-    # For Python 3
-    from urllib.parse import urlencode
+    __version__ = metadata.version("quickchart.io")
+except metadata.PackageNotFoundError:  # pragma: no cover
+    # Package is not installed (e.g. running from a source checkout).
+    __version__ = "0.0.0"
 
-USER_AGENT = 'quickchart-python (2.0.0)'
+USER_AGENT = f"quickchart-python ({__version__})"
 
-FUNCTION_DELIMITER_RE = re.compile('\"__BEGINFUNCTION__(.*?)__ENDFUNCTION__\"')
+FUNCTION_DELIMITER_RE = re.compile(r'"__BEGINFUNCTION__(.*?)__ENDFUNCTION__"')
 
 
 class QuickChartFunction:
-    def __init__(self, script):
+    def __init__(self, script: str):
         self.script = script
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.script
 
 
-def serialize(obj):
+def serialize(obj: Any) -> Any:
     if isinstance(obj, QuickChartFunction):
-        return '__BEGINFUNCTION__' + obj.script + '__ENDFUNCTION__'
+        return "__BEGINFUNCTION__" + obj.script + "__ENDFUNCTION__"
     if isinstance(obj, (datetime.date, datetime.datetime)):
         return obj.isoformat()
     return obj.__dict__
 
 
-def dump_json(obj):
-    ret = json.dumps(obj, default=serialize, separators=(',', ':'))
+def dump_json(obj: Any) -> str:
+    ret = json.dumps(obj, default=serialize, separators=(",", ":"))
     ret = FUNCTION_DELIMITER_RE.sub(
-        lambda match: json.loads('"' + match.group(1) + '"'), ret)
+        lambda match: json.loads('"' + match.group(1) + '"'), ret
+    )
     return ret
 
 
 class QuickChart:
-    def __init__(self):
-        self.config = None
-        self.width = 500
-        self.height = 300
-        self.background_color = '#ffffff'
-        self.device_pixel_ratio = 1.0
-        self.format = 'png'
-        self.version = '2.9.4'
-        self.key = None
-        self.scheme = 'https'
-        self.host = 'quickchart.io'
+    def __init__(self) -> None:
+        self.config: Optional[Union[dict, str]] = None
+        self.width: int = 500
+        self.height: int = 300
+        self.background_color: str = "#ffffff"
+        self.device_pixel_ratio: float = 1.0
+        self.format: str = "png"
+        self.version: str = "2.9.4"
+        self.key: Optional[str] = None
+        self.scheme: str = "https"
+        self.host: str = "quickchart.io"
+        self.timeout: Optional[float] = 60.0
 
-    def is_valid(self):
+    def is_valid(self) -> bool:
         return self.config is not None
 
-    def get_url_base(self):
-        return '%s://%s' % (self.scheme, self.host)
+    def get_url_base(self) -> str:
+        return f"{self.scheme}://{self.host}"
 
-    def get_url(self):
+    def _serialized_config(self) -> str:
+        return dump_json(self.config) if isinstance(self.config, dict) else self.config
+
+    def get_url(self) -> str:
         if not self.is_valid():
             raise RuntimeError(
-                'You must set the `config` attribute before generating a url')
+                "You must set the `config` attribute before generating a url"
+            )
         params = {
-            'c': dump_json(self.config) if type(self.config) == dict else self.config,
-            'w': self.width,
-            'h': self.height,
-            'bkg': self.background_color,
-            'devicePixelRatio': self.device_pixel_ratio,
-            'f': self.format,
-            'v': self.version,
+            "c": self._serialized_config(),
+            "w": self.width,
+            "h": self.height,
+            "bkg": self.background_color,
+            "devicePixelRatio": self.device_pixel_ratio,
+            "f": self.format,
+            "v": self.version,
         }
         if self.key:
-            params['key'] = self.key
-        return '%s/chart?%s' % (self.get_url_base(), urlencode(params))
+            params["key"] = self.key
+        return f"{self.get_url_base()}/chart?{urlencode(params)}"
 
-    def _post(self, url):
-        try:
-            import requests
-        except:
-            raise RuntimeError('Could not find `requests` dependency')
-
+    def _post(self, url: str) -> requests.Response:
         postdata = {
-            'chart': dump_json(self.config) if type(self.config) == dict else self.config,
-            'width': self.width,
-            'height': self.height,
-            'backgroundColor': self.background_color,
-            'devicePixelRatio': self.device_pixel_ratio,
-            'format': self.format,
-            'version': self.version,
+            "chart": self._serialized_config(),
+            "width": self.width,
+            "height": self.height,
+            "backgroundColor": self.background_color,
+            "devicePixelRatio": self.device_pixel_ratio,
+            "format": self.format,
+            "version": self.version,
         }
         if self.key:
-            postdata['key'] = self.key
+            postdata["key"] = self.key
         headers = {
-            'user-agent': USER_AGENT,
+            "user-agent": USER_AGENT,
         }
-        resp = requests.post(url, json=postdata, headers=headers)
+        resp = requests.post(url, json=postdata, headers=headers, timeout=self.timeout)
         if resp.status_code != 200:
-            err_description = resp.headers.get('x-quickchart-error')
+            err_description = resp.headers.get("x-quickchart-error")
+            detail = f"\n{err_description}" if err_description else ""
             raise RuntimeError(
-                'Invalid response code from chart creation endpoint: %d%s'
-                % (resp.status_code, '\n%s' % err_description if err_description else '')
+                "Invalid response code from chart creation endpoint: "
+                f"{resp.status_code}{detail}"
             )
         return resp
 
-
-    def get_short_url(self):
-        resp = self._post('%s/chart/create' % self.get_url_base())
+    def get_short_url(self) -> str:
+        resp = self._post(f"{self.get_url_base()}/chart/create")
         parsed = json.loads(resp.text)
-        if not parsed['success']:
-            raise RuntimeError(
-                'Chart creation endpoint failed to create chart')
-        return parsed['url']
+        if not parsed["success"]:
+            raise RuntimeError("Chart creation endpoint failed to create chart")
+        return parsed["url"]
 
-    def get_bytes(self):
-        resp = self._post('%s/chart' % self.get_url_base())
+    def get_bytes(self) -> bytes:
+        resp = self._post(f"{self.get_url_base()}/chart")
         return resp.content
 
-    def to_file(self, path):
+    def to_file(self, path: str) -> None:
         content = self.get_bytes()
-        with open(path, 'wb') as f:
+        with open(path, "wb") as f:
             f.write(content)
