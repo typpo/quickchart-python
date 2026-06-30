@@ -10,31 +10,25 @@ qc.config = {
     "type": "bar",
     "data": {
         "labels": [datetime(2020, 1, 15), datetime(2021, 1, 15)],
-        "datasets": [{
-            "label": "Foo",
-            "data": [1, 2]
-        }]
+        "datasets": [{"label": "Foo", "data": [1, 2]}],
     },
     "options": {
         "scales": {
-            "yAxes": [{
-                "ticks": {
-                    "callback": QuickChartFunction('(val) => val + "k"')
-                }
-            }, {
-                "ticks": {
-                    "callback": QuickChartFunction('''function(val) {
+            "yAxes": [
+                {"ticks": {"callback": QuickChartFunction('(val) => val + "k"')}},
+                {
+                    "ticks": {
+                        "callback": QuickChartFunction("""function(val) {
                       return val + '???';
-                    }''')
-                }
-            }],
-            "xAxes": [{
-                "ticks": {
-                    "callback": QuickChartFunction('(val) => "$" + val')
-                }
-            }]
+                    }""")
+                    }
+                },
+            ],
+            "xAxes": [
+                {"ticks": {"callback": QuickChartFunction('(val) => "$" + val')}}
+            ],
         }
-    }
+    },
 }
 
 print(qc.get_url())

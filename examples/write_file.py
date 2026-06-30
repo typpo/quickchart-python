@@ -8,13 +8,10 @@ qc.config = {
     "type": "bar",
     "data": {
         "labels": ["Hello world", "Test"],
-        "datasets": [{
-            "label": "Foo",
-            "data": [1, 2]
-        }]
-    }
+        "datasets": [{"label": "Foo", "data": [1, 2]}],
+    },
 }
 
-qc.to_file('/tmp/mychart.png')
+qc.to_file("/tmp/mychart.png")
 
-print('Done.')
+print("Done.")

@@ -1,3 +1,5 @@
 #!/bin/bash -e
 
-poetry run autopep8 --in-place examples/*.py quickchart/*.py
+# Format and autofix lint issues across the package, examples, and tests.
+poetry run ruff format .
+poetry run ruff check --fix .

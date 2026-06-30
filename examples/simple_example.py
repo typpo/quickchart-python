@@ -8,11 +8,8 @@ qc.config = {
     "type": "bar",
     "data": {
         "labels": ["Hello world", "Test"],
-        "datasets": [{
-            "label": "Foo",
-            "data": [1, 2]
-        }]
-    }
+        "datasets": [{"label": "Foo", "data": [1, 2]}],
+    },
 }
 
 print(qc.get_url())

@@ -7,11 +7,13 @@ qc.config = {
     "type": "line",
     "data": {
         "labels": list(range(0, 100)),
-        "datasets": [{
-            "label": "Foo",
-            "data": random.sample(range(0, 100), 100),
-        }]
-    }
+        "datasets": [
+            {
+                "label": "Foo",
+                "data": random.sample(range(0, 100), 100),
+            }
+        ],
+    },
 }
 
 print(qc.get_short_url())

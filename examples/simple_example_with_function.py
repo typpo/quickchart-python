@@ -4,7 +4,7 @@ qc = QuickChart()
 qc.width = 600
 qc.height = 300
 qc.device_pixel_ratio = 2.0
-qc.config = '''{
+qc.config = """{
   type: 'bar',
   data: {
     labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -27,6 +27,6 @@ qc.config = '''{
       }]
     }
   }
-}'''
+}"""
 
 print(qc.get_url())

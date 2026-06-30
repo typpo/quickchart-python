@@ -1,5 +1,5 @@
 # quickchart-python
-[![Build Status](https://travis-ci.com/typpo/quickchart-python.svg?branch=master)](https://travis-ci.com/typpo/quickchart-python)
+[![CI](https://github.com/typpo/quickchart-python/actions/workflows/ci.yml/badge.svg)](https://github.com/typpo/quickchart-python/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/quickchart.io)](https://pypi.org/project/quickchart-io/)
 [![PyPI - License](https://img.shields.io/pypi/l/quickchart.io)](https://pypi.org/project/quickchart-io/)
 
@@ -13,7 +13,7 @@ Use the `quickchart` library in this project, or install through [pip](https://p
 pip install quickchart.io
 ```
 
-As of release 2.0, this package requires >= Python 3.7.  If you need support for earlier versions of Python, use [version 1.0.1](https://pypi.org/project/quickchart-io/1.0.1/).
+Version 3.0.0 and later require Python 3.9 or later.  If you need support for Python 3.7 or 3.8, use [version 2.0.0](https://pypi.org/project/quickchart-io/2.0.0/); for earlier versions of Python, use [version 1.0.1](https://pypi.org/project/quickchart-io/1.0.1/).
 
 # Usage
 
@@ -132,6 +132,9 @@ Override the host of the chart render server. Defaults to quickchart.io.
 ### key: str
 Set an API key that will be included with the request.
 
+### timeout: float
+Timeout in seconds for the network requests made by `get_bytes()`, `get_short_url()`, and `to_file()`.  Defaults to 60.0.  Set to `None` to disable the timeout.
+
 ## Getting URLs
 
 There are two ways to get a URL for your chart object.
@@ -159,3 +162,25 @@ Writes the chart image to a file path.
 ## More examples
 
 Checkout the `examples` directory to see other usage.
+
+# Development
+
+This project uses [Poetry](https://python-poetry.org/) for packaging and dependency management.
+
+```
+# Install dependencies (including dev tools)
+poetry install --with dev
+
+# Run the test suite
+poetry run python -m pytest tests.py
+
+# Lint and format
+poetry run ruff check .
+poetry run ruff format .
+```
+
+The tests that hit the live quickchart.io service are skipped by default.  Set `QUICKCHART_NETWORK_TESTS=1` to run them:
+
+```
+QUICKCHART_NETWORK_TESTS=1 poetry run python -m pytest tests.py
+```
