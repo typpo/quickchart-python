@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1.0
+## 3.0.0
 
 - Add a configurable `timeout` (default 60 seconds) to all network requests so
   `get_bytes()`, `get_short_url()`, and `to_file()` no longer hang indefinitely.

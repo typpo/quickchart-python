@@ -13,7 +13,7 @@ Use the `quickchart` library in this project, or install through [pip](https://p
 pip install quickchart.io
 ```
 
-This package requires Python 3.9 or later.  If you need support for Python 3.7 or 3.8, use [version 2.0.0](https://pypi.org/project/quickchart-io/2.0.0/); for earlier versions of Python, use [version 1.0.1](https://pypi.org/project/quickchart-io/1.0.1/).
+Version 3.0.0 and later require Python 3.9 or later.  If you need support for Python 3.7 or 3.8, use [version 2.0.0](https://pypi.org/project/quickchart-io/2.0.0/); for earlier versions of Python, use [version 1.0.1](https://pypi.org/project/quickchart-io/1.0.1/).
 
 # Usage
 

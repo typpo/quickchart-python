@@ -1,6 +1,6 @@
 [project]
 name = "quickchart.io"
-version = "2.1.0"
+version = "3.0.0"
 description = "A client for quickchart.io, a service that generates static chart images"
 keywords = ["chart api", "chart image", "charts"]
 authors = [{ name = "Ian Webster", email = "ianw_pypi@ianww.com" }]
