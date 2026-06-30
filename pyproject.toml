@@ -7,7 +7,7 @@ authors = [{ name = "Ian Webster", email = "ianw_pypi@ianww.com" }]
 maintainers = [{ name = "Ian Webster", email = "ianw_pypi@ianww.com" }]
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = ["requests>=2.28.1"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -16,7 +16,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -38,11 +37,11 @@ packages = [{ include = "quickchart" }]
 
 [tool.ruff]
 line-length = 88
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
-# We still support Python 3.8, where `X | Y` union syntax is not natively
+# We still support Python 3.9, where `X | Y` union syntax is not natively
 # available at runtime, so keep the typing.Optional / typing.Union spellings.
 ignore = ["UP007", "UP045"]
 

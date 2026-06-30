@@ -4,8 +4,8 @@
 
 - Add a configurable `timeout` (default 60 seconds) to all network requests so
   `get_bytes()`, `get_short_url()`, and `to_file()` no longer hang indefinitely.
-- Drop support for end-of-life Python 3.7; the minimum supported version is now
-  Python 3.8. Tested against Python 3.8 through 3.13.
+- Drop support for end-of-life Python 3.7 and 3.8; the minimum supported version
+  is now Python 3.9. Tested against Python 3.9 through 3.13.
 - Ship inline type hints and a `py.typed` marker (PEP 561).
 - Derive the client `User-Agent` version from the installed package metadata so
   it stays in sync with the release.
